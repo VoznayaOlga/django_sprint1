@@ -1,1 +1,1 @@
-# Blogicum
+# Blogicum 1.0
