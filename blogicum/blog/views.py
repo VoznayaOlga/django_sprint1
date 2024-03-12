@@ -44,13 +44,16 @@ posts: list = [
 ]
 
 # Create your views here.
+
+
 def index(request):
-    return render(request, 'blog/index.html', context = { 'posts':posts})
+    return render(request, 'blog/index.html', context={'posts': posts})
+
 
 def post_detail(request, pk):
-    return render(request, 'blog/detail.html', context = {'post':posts[pk]})
-
-def category_posts(request,category_slug):
-    return render(request, 'blog/category.html', context = {'category':category_slug})
+    return render(request, 'blog/detail.html', context={'post': posts[pk]})
 
 
+def category_posts(request, category_slug):
+    return render(request, 'blog/category.html',
+                  context={'category': category_slug})
