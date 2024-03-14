@@ -1,6 +1,10 @@
+"""Блог"""
+from typing import Union
+from django.http import Http404
 from django.shortcuts import render
 
-posts: list = [
+
+posts: list[dict[str, Union[str, int]]] = [
     {
         'id': 0,
         'location': 'Остров отчаянья',
@@ -43,17 +47,28 @@ posts: list = [
     },
 ]
 
-# Create your views here.
+posts_id: dict[str, dict[str, Union[str, int]]] = {
+    '0': posts[0],
+    '1': posts[1],
+    '2': posts[2]}
 
 
 def index(request):
+    """Индекс"""
     return render(request, 'blog/index.html', context={'posts': posts})
 
 
 def post_detail(request, pk):
-    return render(request, 'blog/detail.html', context={'post': posts[pk]})
+    """Детальное описание"""
+    if str(pk) in posts_id.keys():
+        post = posts_id[str(pk)]
+        return render(request, 'blog/detail.html',
+                      context={'post': post,
+                               'post_text': post['text'].split(chr(10))})
+    raise Http404
 
 
 def category_posts(request, category_slug):
+    """Категория"""
     return render(request, 'blog/category.html',
                   context={'category': category_slug})
