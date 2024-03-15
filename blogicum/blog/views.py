@@ -1,5 +1,6 @@
 """Блог"""
 from typing import Union
+
 from django.http import Http404
 from django.shortcuts import render
 
@@ -47,10 +48,9 @@ posts: list[dict[str, Union[str, int]]] = [
     },
 ]
 
-posts_id: dict[str, dict[str, Union[str, int]]] = {
-    '0': posts[0],
-    '1': posts[1],
-    '2': posts[2]}
+posts_id: dict[int, dict[str, Union[str, int]]] = {}
+for post in posts:
+    posts_id[int(post['id'])] = post
 
 
 def index(request):
@@ -60,12 +60,11 @@ def index(request):
 
 def post_detail(request, pk):
     """Детальное описание"""
-    if str(pk) in posts_id.keys():
-        post = posts_id[str(pk)]
-        return render(request, 'blog/detail.html',
-                      context={'post': post,
-                               'post_text': post['text'].split(chr(10))})
-    raise Http404
+    if pk not in posts_id:
+        raise Http404
+    post = posts_id[pk]
+    return render(request, 'blog/detail.html',
+                      context={'post': post})
 
 
 def category_posts(request, category_slug):

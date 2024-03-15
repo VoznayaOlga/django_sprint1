@@ -18,9 +18,7 @@
       </li>
     </ul>         
     <p>
-      {% for post_str in post_text %}
-          {{ post_str }}<br>
-      {% endfor%}  
+      {{ post.text|linebreaksbr }}
     </p>          
   </article>                
 {% endblock %}
