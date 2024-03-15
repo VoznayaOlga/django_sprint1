@@ -64,7 +64,7 @@ def post_detail(request, pk):
         raise Http404
     post = posts_id[pk]
     return render(request, 'blog/detail.html',
-                      context={'post': post})
+                  context={'post': post})
 
 
 def category_posts(request, category_slug):
